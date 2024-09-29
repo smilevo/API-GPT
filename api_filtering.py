@@ -16,6 +16,10 @@ def clean(text):
 
 conversations = []
 def prompt(directory):
+    if not os.path.exists(directory):
+        print(f"Directory {directory} does not exist!")
+        return
+    
     # iterating over each json file in the directory
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
@@ -35,15 +39,16 @@ def prompt(directory):
                                 reply = clean(conversation['Answer'])
                                 conversations.append((prompt, reply))
 
-prompt("DevGPT/snapshot_20230727")
-prompt("DevGPT/snapshot_20230803")
-prompt("DevGPT/snapshot_20230810")
-prompt("DevGPT/snapshot_20230817")
-prompt("DevGPT/snapshot_20230824")
-prompt("DevGPT/snapshot_20230831")
-prompt("DevGPT/snapshot_20230907")
-prompt("DevGPT/snapshot_20230914")
-prompt("DevGPT/snapshot_20231012")
+
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230727")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230803")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230810")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230817")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230824")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230831")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230907")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20230914")
+prompt(r"D:/Study material/RIT stuff/Applied Data Science/DevGPT/snapshot_20231012")
 
 '''
 keywords = [
@@ -276,6 +281,86 @@ def related_counter(conversation):
     if 'api request' in conversation[0] or 'api request' in conversation[1]:
         api_request+=1
         add_label(conversation, 'Related_terms', 'api_request')
+                  
+api_gateway = 0
+api_headers = 0
+api_key = 0
+api_cache = 0
+api_endpoint = 0
+api_grpc = 0
+api_graphql = 0
+api_http = 0
+api_microservices = 0
+api_parameters = 0
+api_rpc = 0
+api_rest = 0
+api_soap = 0
+api_status_codes = 0
+api_webhooks = 0
+
+def architecture_components_counter (conversation):
+    global api_gateway
+    global api_headers
+    global api_key
+    global api_cache
+    global api_endpoint
+    global api_grpc
+    global api_graphql
+    global api_http
+    global api_microservices
+    global api_parameters
+    global api_rpc
+    global api_rest
+    global api_soap
+    global api_status_codes
+    global api_webhooks
+
+    if 'gateway' in conversation[0] or 'gateway' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'api_gateway')
+        api_gateway+=1
+    if 'headers' in conversation[0] or 'headers' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'api_headers')
+        api_headers+=1
+    if 'key' in conversation[0] or 'key' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'api_key')
+        api_key+=1
+    if 'cache' in conversation[0] or 'cache' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'cache')
+        api_cache+=1
+    if 'endpoint' in conversation[0] or 'endpoint' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'endpoint')
+        api_endpoint+=1
+    if 'grpc' in conversation[0] or 'grpc' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'grpc')
+        api_grpc+=1
+    if 'graphql' in conversation[0] or 'graphql' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'graphql')
+        api_graphql+=1
+    if 'http' in conversation[0] or 'http' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'http')
+        api_http+=1
+    if 'microservices' in conversation[0] or 'microservices' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'microservices')
+        api_microservices+=1
+    if 'parameters' in conversation[0] or 'parameters' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'parameters')
+        api_parameters+=1
+    if 'rpc' in conversation[0] or 'rpc' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'rpc')
+        api_rpc+=1
+    if 'rest' in conversation[0] or 'rest' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'rest')
+        api_rest+=1
+    if 'soap' in conversation[0] or 'soap' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'soap')
+        api_soap+=1
+    if 'status codes' in conversation[0] or 'status codes' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', )
+        api_status_codes+=1
+    if 'webhooks' in conversation[0] or 'webhooks' in conversation[1]:
+        add_label(conversation, 'Architecture_Components', 'webhooks')
+        api_webhooks+=1
+    
 
 for conversation in conversations:
     method_counter(conversation)
@@ -297,8 +382,6 @@ for key, value in labels.items():
 df = pd.DataFrame(rows, columns=['Prompt', 'Reply', 'Class', 'Subclass'])
 df.to_excel('conv_api_label.xlsx', index=False)
 
-
-'''
 print('METHOD TERMS')
 print('api_crud', api_crud)
 print('api_delete', api_delete)
@@ -349,4 +432,21 @@ print('api_ecosystem', api_ecosystem)
 print('api_first', api_first)
 print('api_request', api_request)
 print('--------------------------------------')
-'''
+
+print('ARCHITECTURE AND COMPONENTS')
+print('api gateway', api_gateway)
+print('api headers', api_headers)
+print('api key', api_key)
+print('cache', api_cache)
+print('endpoint', api_endpoint)
+print('grpc', api_grpc)
+print('graphql', api_graphql)
+print('http', api_http)
+print('microservices', api_microservices)
+print('parameters', api_parameters)
+print('rpc', api_rpc)
+print('rest', api_rest)
+print('soap', api_soap)
+print('status_codes', api_status_codes)
+print('webhooks', api_webhooks)
+print('--------------------------------------')
